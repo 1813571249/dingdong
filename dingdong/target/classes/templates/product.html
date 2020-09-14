@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>叮咚有礼--叮咚一下</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<link rel="stylesheet" href="css/demo.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/fen.css" />
+		<script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+	</head>
+	<body>
+		<div class="header">
+			<div class="hea_nav">
+				<a href="index.html"><img src="img/logo.png" class="logo"/></a>
+				<ul>
+					<a href="index.html"><li>首页</li></a>
+					<a href="product.html"><li>叮咚一下</li></a>
+					<a th:if="${session.loginUser==null}" th:href="@{/personal.html}"><li>个人中心</li></a>
+					<a th:if="${session.loginUser!=null}" th:href="@{'/personal.html?username='+${session.loginUser.username}}"><li>个人中心</li></a>
+			
+				</ul>
+			</div>
+			<div class="hea_right">
+				<p th:if="${session.loginUser==null}">
+					<a href="register.html">注册</a>|
+					<a class="login_btn">登录</a>
+				</p>
+				<p th:if="${session.loginUser!=null}">
+					<a th:text="'用户：'+${session.loginUser.username}"></a>|
+					<a href="/logout">注销</a>
+				</p>
+				<a th:if="${session.loginUser!=null}" th:href="@{'/shop_car.html?username='+${session.loginUser.username}}">
+					<p>
+						<i class="iconfont">&#xe600;</i>
+						<span>0件</span>
+					</p>
+				</a>
+				<a th:if="${session.loginUser==null}" th:href="@{/index.html}">
+					<p>
+						<i class="iconfont">&#xe600;</i>
+						<span>0件</span>
+					</p>
+				</a>
+					
+
+			</div>
+		</div>
+		<div class="header2">
+				<img src="img/phone_meau.png" class="meau"/>
+				<a href="index.html"><img src="img/logo.png" class="logo"/></a>
+				<a href="shop_car.html"><i class="iconfont">&#xe600;</i><span>1</span></a>
+				<ul class="meau_box">
+					<a href="index.html"><li>首页</li></a>
+					<a href="product.html"><li>叮咚一下</li></a>
+					<a href="personal.html"><li>个人中心</li></a>
+					
+					<p style="border-right:1px #fff solid;" class="login_btn">登录</p>
+					<a href="register.html"><p>注册</p></a>
+				</ul>
+			</div>
+			<script>
+				$(function(){
+					$(".meau").on("click", function(e) {
+					$(".meau_box").slideToggle();
+					$(document).one("click", function() {
+						$(".meau_box").slideUp();
+					});
+					e.stopPropagation();
+				});
+				$(".meau").on("click", function(e) {
+					e.stopPropagation();
+				});
+				});
+			</script>
+		<div class="product">
+			<ul>
+				<a th:each="product:${products}" th:href="@{'/buy.html?Id='+${product.getId()}}"><li>
+					<img th:src="@{'/img/pro_pic'+${product.getId()}+'.png'}" />
+					<div class="proli_bg">
+						<div class="proli_bg_box">
+							<div class="proli_top">
+								<p>本周特推</p>
+								<p th:text="${product.getName()}">叮咚叮咚礼盒50G</p>
+							</div>
+							<p th:text="${product.getPrice()}"></p>
+						</div>
+					</div>
+				</li></a>
+
+			</ul>
+		</div>
+		<div class="login_bg">
+			<div class="login">
+				<img src="img/close.png" class="close"/>
+				<img src="img/login.png" style="margin: 25px 0px;"/>
+				<form action="/tologin" method="post">
+					<p class="list">
+						<img src="img/login_pic2.png" />
+						<input name="username" type="text" placeholder="请输入用户的用户名" />
+					</p>
+					<p class="list">
+						<img src="img/login_pic3.png" />
+						<input name="password" type="password" placeholder="请输入用户的密码" />
+					</p>
+					<a href="/find.html">忘记密码?</a>
+					<p>
+						<a href="register.html">注册</a>
+						<a><input style="height: 35px;width: 115px" type="submit" value="登陆"></a>
+					</p>
+				</form>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$(".close").click(function(){
+					$(".login_bg").fadeOut();
+				});
+				$(".login_btn").click(function(){
+					$(".login_bg").slideDown();
+					$(".meau_box").slideUp();
+				});
+			});
+		</script>
+	</body>
+
+</html>

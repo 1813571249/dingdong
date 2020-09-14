@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>叮咚有礼--找回密码</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<link rel="stylesheet" href="css/demo.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/fen.css" />
+		<script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+	</head>
+
+	<body>
+		<div class="header">
+			<div class="hea_nav">
+				<a href="index.html"><img src="img/logo.png" class="logo"/></a>
+				<ul>
+					<a href="index.html"><li>首页</li></a>
+					<a href="product.html"><li>叮咚一下</li></a>
+					<a th:if="${session.loginUser==null}" href="personal.html"><li>个人中心</li></a>
+					<a th:if="${session.loginUser!=null}" th:href="@{'/personal.html?username='+${session.loginUser.username}}"><li>个人中心</li></a>
+				</ul>
+			</div>
+			<div class="hea_right">
+				<p th:if="${session.loginUser==null}">
+					<a href="register.html">注册</a>|
+					<a class="login_btn">登录</a>
+				</p>
+				<p th:if="${session.loginUser!=null}">
+					<a th:text="'用户：'+${session.loginUser.username}"></a>|
+					<a href="/logout">注销</a>
+				</p>
+				<a th:if="${session.loginUser!=null}" th:href="@{'/shop_car.html?username='+${session.loginUser.username}}">
+					<p>
+						<i class="iconfont">&#xe600;</i>
+						<span>0件</span>
+					</p>
+				</a>
+				<a th:if="${session.loginUser==null}" th:href="@{/index.html}">
+					<p>
+						<i class="iconfont">&#xe600;</i>
+						<span>0件</span>
+					</p>
+				</a>
+					
+			</div>
+		</div>
+		<div class="header2">
+				<img src="img/phone_meau.png" class="meau"/>
+				<a href="index.html"><img src="img/logo.png" class="logo"/></a>
+				<a href="shop_car.html"><i class="iconfont">&#xe600;</i></a>
+				<ul class="meau_box">
+					<a href="index.html"><li>首页</li></a>
+					<a href="product.html"><li>叮咚一下</li></a>
+					<a href="personal.html"><li>个人中心</li></a>
+					<a th:if="${session.loginUser!=null}">
+						<li th:text="'用户：'+${session.loginUser.username}"></li>
+						<li><a href="/logout">注销</a></li>
+					</a>
+					<p style="border-right:1px #fff solid;" class="login_btn">登录</p>
+					<a href="register.html"><p>注册</p></a>
+				</ul>
+			</div>
+			<script>
+				$(function(){
+					$(".meau").on("click", function(e) {
+					$(".meau_box").slideToggle();
+					$(document).one("click", function() {
+						$(".meau_box").slideUp();
+					});
+					e.stopPropagation();
+				});
+				$(".meau").on("click", function(e) {
+					e.stopPropagation();
+				});
+				});
+			</script>
+		<div class="register">
+			<p class="res_title">重置密码</p>
+			<div class="res_box" style="height: 420px;">
+				<ul class="res_nav">
+					<li class="active" style="width: 50%;">
+						<i class="iconfont">&#xe602;</i>
+						<span>手机验证</span>
+					</li>
+					<li style="width: 50%;">
+						<i class="iconfont">&#xe603;</i>
+						<span>邮箱验证</span>
+					</li>
+				</ul>
+				<div class="res_form" style="height:328px;">
+					<form action="/reset" method="post" style="border: none;">
+						<p class="res_list">
+							<span>手机号码</span>
+							<input name="telephone" type="tel" />
+						</p>
+						<p class="res_list">
+							<span>登录帐号</span>
+							<input name="username" type="tel" />
+						</p>
+						<p class="res_list">
+						<span>设置密码</span>
+						<input name="password1" type="password" />
+						</p>
+						<p class="res_list">
+							<span>确认密码</span>
+							<input name="password2" type="password" />
+						</p>
+						<p class="res_list">
+						<span>手机验证码</span>
+						<input name="code" type="text" style="width: 70px;"/>
+						<span class="yan_code" >获取验证码</span>
+						</p>
+						<p class="res_btn" >
+							<input style="height: 40px;width: 200px;position:relative;right:15px;background-color: #55AA77" type="submit">
+						</p>
+
+					</form>
+
+
+
+					<!--<p>已有账号？请<a style="color: #AE191B;" class="login_btn">直接登录</a></p>-->
+				</div>
+				<div class="res_form" style="padding-top: 40px;display: none;">
+					<form action="/eamil-reset" method="post" style="border: none;">
+						<p class="res_list">
+							<span>邮箱地址</span>
+							<input name="email" type="email" />
+						</p>
+						<p class="res_list" style="margin-top: 10px;">
+							<span>验证码</span>
+							<input type="text" style="width: 70px;"/>
+							<span class="yan_code">获取验证码</span>
+						</p>
+						<p class="res_list">
+							<span>设置密码</span>
+							<input name="password1" type="password" />
+						</p>
+						<p class="res_list">
+							<span>确认密码</span>
+							<input name="password2" type="password" />
+						</p>
+						<p class="res_btn"><input style="height: 40px;width: 200px;position:relative;right:15px;background-color: #55AA77" type="submit"></p>
+					</form>
+					<!--<p>已有账号？请<a style="color: #AE191B;" class="login_btn">直接登录</a></p>-->
+				</div>
+			</div>
+		</div>
+		<div class="login_bg">
+			<div class="login">
+				<img src="img/close.png" class="close"/>
+				<img src="img/login.png" style="margin: 25px 0px;"/>
+			  <form action="/tologin" method="post">
+				<p class="list">
+					<img src="img/login_pic2.png" />
+					<input name="username" type="text" placeholder="请输入用户的用户名" />
+				</p>
+				<p class="list">
+					<img src="img/login_pic3.png" />
+					<input name="password" type="password" placeholder="请输入用户的密码" />
+				</p>
+				<a href="/find.html">忘记密码?</a>
+				<p>
+					<a href="register.html">注册</a>
+					<a><input style="height: 35px;width: 115px" type="submit" value="登陆"></a>
+				</p>
+			  </form>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$(".close").click(function(){
+					$(".login_bg").fadeOut();
+				});
+				$(".login_btn").click(function(){
+					$(".login_bg").slideDown();
+					$(".meau_box").slideUp();
+				});
+			});
+		</script>
+		<script type="text/javascript">
+			$(function(){
+				$(".res_nav").children("li").click(function(){
+					$(".res_nav").children("li").stop().removeClass("active");
+					$(this).stop().addClass("active");
+					$(".res_form").stop().slideUp();
+					$(".res_form").eq($(".res_nav").children("li").index(this)).stop().slideDown();
+				});
+			});
+		</script>
+	</body>
+
+</html>

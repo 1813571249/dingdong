@@ -1,0 +1,15 @@
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    username: root
+    password:
+    url: jdbc:mysql://localhost:3306/dingdong?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+#整合mybatis
+mybatis:
+  type-aliases-package: cn.szl.dingdong.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml

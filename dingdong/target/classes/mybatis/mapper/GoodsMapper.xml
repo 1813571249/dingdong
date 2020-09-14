@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.szl.dingdong.mapper.GoodsMapper">
+
+    <select id="queryById" parameterType="Integer" resultType="product">
+        select * from goods WHERE id=#{Id}
+    </select>
+
+    <select id="queryProductList" resultType="product">
+        select * from goods
+    </select>
+
+</mapper>

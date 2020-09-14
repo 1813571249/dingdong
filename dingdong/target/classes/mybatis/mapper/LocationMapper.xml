@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.szl.dingdong.mapper.LocationMapper">
+
+    <select id="queryByusername" parameterType="String" resultType="Location">
+        select * from  location  WHERE username=#{username}
+    </select>
+
+    <insert id="add_location" parameterType="Location" >
+        INSERT INTO location (username,address,telephone,postal,receiver) VALUES (#{username},#{address},#{telephone},#{postal},#{receiver})
+    </insert>
+
+</mapper>
